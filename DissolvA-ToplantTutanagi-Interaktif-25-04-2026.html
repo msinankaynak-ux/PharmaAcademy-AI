@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DissolvA — Toplantı Tutanağı | 25 Nisan 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0D1B2A;
+    --navy2:   #0A1520;
+    --navy3:   #1A2E45;
+    --blue:    #1A3A5C;
+    --gold:    #F5A623;
+    --white:   #FFFFFF;
+    --off:     #F7F9FC;
+    --off2:    #EEF3F9;
+    --gray:    #8899AA;
+    --dgray:   #4A5568;
+    --red:     #9A2020;
+    --red-bg:  #FDE8E8;
+    --amb:     #856010;
+    --amb-bg:  #FFF8E8;
+    --grn:     #3A7A1A;
+    --grn-bg:  #EEF5E8;
+    --done-bg: #F0F0F0;
+    --done-txt:#AAAAAA;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  @media print {
+    body { -webkit-print-color-adjust:exact; print-color-adjust:exact; background:#fff; padding:0; }
+    .page { box-shadow:none; margin:0; max-width:100%; }
+    .no-print { display:none !important; }
+    .progress-wrap { display:none; }
+  }
+
+  body {
+    font-family:'DM Sans', sans-serif;
+    background: #D6DCE4;
+    padding: 32px 16px;
+    min-height: 100vh;
+  }
+
+  /* ── Araç Çubuğu ── */
+  .toolbar {
+    max-width: 794px; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .progress-wrap {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .progress-bar-outer {
+    width: 180px; height: 8px;
+    background: #b0b8c4; border-radius: 99px; overflow: hidden;
+  }
+  .progress-bar-inner {
+    height: 100%; background: var(--gold);
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 11px; font-weight: 600; color: var(--navy);
+    min-width: 60px;
+  }
+  .btn-group { display: flex; gap: 8px; }
+  .btn {
+    padding: 8px 18px; border-radius: 6px;
+    font-family:'DM Sans', sans-serif; font-size: 12px;
+    font-weight: 600; cursor: pointer; border: none;
+    transition: transform .15s, box-shadow .15s;
+    letter-spacing: .3px;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--navy3); }
+
+  /* ── Sayfa ── */
+  .page {
+    background: #fff;
+    max-width: 794px; margin: 0 auto;
+    box-shadow: 0 8px 40px rgba(0,0,0,.18);
+  }
+
+  /* ── Header ── */
+  .header { background: var(--navy); position: relative; overflow: hidden; }
+  .header::before {
+    content:''; position:absolute; inset:0;
+    background: repeating-linear-gradient(-55deg,transparent,transparent 40px,
+      rgba(255,255,255,.012) 40px,rgba(255,255,255,.012) 41px);
+    pointer-events:none;
+  }
+  .header-main {
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 20px 32px 16px; position:relative;
+  }
+  .logo-wrap { display:flex; align-items:center; gap:13px; }
+  .logo-icon {
+    width:42px; height:42px; background:var(--navy3);
+    border-radius:9px; display:flex; align-items:center;
+    justify-content:center; position:relative; flex-shrink:0;
+  }
+  .logo-icon span { font-family:'DM Serif Display',serif; font-size:22px; color:#fff; }
+  .logo-icon::after {
+    content:''; position:absolute; top:6px; right:6px;
+    width:9px; height:9px;
+    border-top:2px solid var(--gold); border-right:2px solid var(--gold);
+  }
+  .brand-text .name {
+    font-family:'DM Serif Display',serif;
+    font-size:22px; color:#fff; letter-spacing:-.3px; line-height:1;
+  }
+  .brand-text .name em { color:var(--gold); font-style:normal; }
+  .brand-text .name sup { font-size:9px; color:#888; vertical-align:super; font-family:'DM Sans'; font-weight:300; }
+  .brand-text .tagline { font-size:7px; letter-spacing:2.2px; color:var(--gold); margin-top:4px; font-weight:500; }
+  .header-meta { text-align:right; }
+  .header-meta .doc-type { font-size:8px; letter-spacing:2px; color:var(--gray); font-weight:600; margin-bottom:3px; }
+  .header-meta .ref { font-size:10px; color:#445566; margin-bottom:1px; }
+  .header-meta .date { font-size:10px; color:var(--gray); }
+  .gold-sep { height:1px; background:linear-gradient(to right,var(--gold),#2a4060 60%,transparent); margin:0 32px; }
+  .info-band { background:var(--navy2); display:flex; padding:7px 32px; }
+  .info-field { flex:1; border-right:1px solid #1a2e45; padding-right:16px; margin-right:16px; }
+  .info-field:last-child { border-right:none; }
+  .info-field .lbl { font-size:6px; letter-spacing:1.5px; color:var(--gold); font-weight:600; margin-bottom:2px; }
+  .info-field .val { font-size:9px; color:#ccd8e4; font-weight:500; }
+  .badge-strip { display:flex; gap:8px; padding:9px 32px 12px; }
+  .badge { font-size:7px; letter-spacing:1px; color:var(--gray); padding:3px 10px; border:.5px solid #2A4060; border-radius:20px; font-weight:500; }
+
+  /* ── Body ── */
+  .body { padding:28px 32px 20px; }
+
+  .meta-cards { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px; }
+  .meta-card { border:.5px solid #dde4ee; border-top:2.5px solid var(--gold); border-radius:4px; overflow:hidden; }
+  .meta-card .mc-head { background:var(--navy); padding:5px 12px; font-size:7px; letter-spacing:1.5px; color:#8899aa; font-weight:600; }
+  .meta-card .mc-body { background:var(--off); padding:8px 12px; font-size:9.5px; color:var(--navy); font-weight:500; line-height:1.5; }
+
+  .section-head { display:flex; align-items:center; gap:10px; margin:22px 0 14px; }
+  .section-head::after { content:''; flex:1; height:1px; background:linear-gradient(to right,var(--gold),transparent); }
+  .section-head span { font-size:8px; letter-spacing:2px; color:var(--gold); font-weight:700; white-space:nowrap; }
+
+  /* ── Aksiyon Kartı ── */
+  .action-card {
+    display:flex; margin-bottom:8px;
+    border:.5px solid #dde4ee; border-radius:4px;
+    overflow:hidden; border-top:2px solid var(--gold);
+    transition: opacity .35s, border-color .35s;
+    page-break-inside:avoid;
+  }
+  .action-card.done {
+    border-top-color: var(--done-txt);
+    opacity: .72;
+  }
+
+  /* Numara kutusu */
+  .action-no {
+    width:38px; flex-shrink:0; background:var(--navy);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'DM Serif Display',serif; font-size:18px; color:#fff;
+    transition: background .35s;
+  }
+  .action-card.done .action-no { background:#667788; }
+
+  .action-content { flex:1; }
+
+  /* Başlık satırı: checkbox + metin */
+  .action-title-row {
+    background:var(--off2);
+    padding:8px 14px;
+    display:flex; align-items:flex-start; gap:10px;
+    border-bottom:.5px solid #dde4ee;
+    cursor:pointer;
+    user-select:none;
+  }
+  .action-title-row:hover { background:#e4ecf5; }
+
+  /* Özel checkbox */
+  .cb-wrap { flex-shrink:0; margin-top:1px; }
+  .cb-wrap input[type="checkbox"] { display:none; }
+  .cb-box {
+    width:17px; height:17px;
+    border:2px solid var(--navy3); border-radius:4px;
+    background:#fff; display:flex; align-items:center; justify-content:center;
+    transition: background .2s, border-color .2s;
+    flex-shrink:0;
+  }
+  .cb-wrap input:checked + .cb-box {
+    background:var(--grn); border-color:var(--grn);
+  }
+  .cb-box .tick {
+    display:none; color:#fff; font-size:11px; line-height:1; font-weight:700;
+  }
+  .cb-wrap input:checked + .cb-box .tick { display:block; }
+
+  .action-title-text {
+    font-size:10px; font-weight:600; color:var(--navy);
+    line-height:1.35; transition: color .35s;
+  }
+  .action-card.done .action-title-text {
+    text-decoration: line-through;
+    text-decoration-color: #888;
+    text-decoration-thickness: 1.5px;
+    color: var(--done-txt);
+  }
+
+  .action-desc {
+    padding:8px 14px 6px; font-size:9px; color:#3a4a5a;
+    line-height:1.65; background:#fff; border-bottom:.5px solid #eef2f7;
+    transition: color .35s;
+  }
+  .action-card.done .action-desc {
+    text-decoration: line-through;
+    text-decoration-color: #bbb;
+    text-decoration-thickness: 1px;
+    color: var(--done-txt);
+  }
+
+  .action-footer {
+    display:flex; align-items:center; padding:5px 14px; gap:20px;
+    transition: opacity .35s;
+  }
+  .action-card.done .action-footer { opacity:.5; }
+  .af-item { display:flex; align-items:center; gap:5px; }
+  .af-label { font-size:6.5px; letter-spacing:1px; color:var(--gray); font-weight:600; }
+  .af-val { font-size:8.5px; font-weight:600; color:var(--navy); }
+
+  .badge-yuksek { background:var(--red-bg); color:var(--red); padding:2px 8px; border-radius:20px; font-size:8px; font-weight:700; }
+  .badge-orta   { background:var(--amb-bg); color:var(--amb); padding:2px 8px; border-radius:20px; font-size:8px; font-weight:700; }
+
+  /* Tamamlandı rozeti */
+  .done-stamp {
+    display:none; margin-left:auto;
+    font-size:7px; letter-spacing:1px; font-weight:700;
+    color:var(--grn); background:var(--grn-bg);
+    padding:2px 8px; border-radius:20px;
+  }
+  .action-card.done .done-stamp { display:inline-block; }
+
+  /* ── Özet Tablo ── */
+  .summary-table { width:100%; border-collapse:collapse; font-size:9px; margin-top:10px; }
+  .summary-table th { background:var(--navy); color:#fff; padding:7px 10px; text-align:left; font-size:8px; font-weight:600; }
+  .summary-table th:first-child { text-align:center; width:30px; }
+  .summary-table td { padding:6px 10px; border-bottom:.5px solid #eef2f7; color:#334; vertical-align:middle; }
+  .summary-table td:first-child { text-align:center; font-weight:700; color:var(--navy); }
+  .summary-table tr:nth-child(even) td { background:var(--off); }
+  .summary-table tr.high { border-left:2px solid var(--red); }
+  .summary-table tr.mid  { border-left:2px solid var(--amb); }
+  .summary-table tr.done-row td {
+    text-decoration:line-through; text-decoration-color:#bbb;
+    color:var(--done-txt); opacity:.7;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    background:var(--navy); padding:14px 32px;
+    display:flex; align-items:center; justify-content:space-between; margin-top:4px;
+  }
+  .footer-sign .name { font-size:11px; font-weight:600; color:#fff; }
+  .footer-sign .title { font-size:8px; color:var(--gray); margin-top:2px; }
+  .footer-logo { display:flex; align-items:center; gap:9px; }
+  .footer-logo .fi {
+    width:28px; height:28px; background:var(--navy3);
+    border-radius:6px; display:flex; align-items:center; justify-content:center; position:relative;
+  }
+  .footer-logo .fi span { font-family:'DM Serif Display',serif; font-size:14px; color:#fff; }
+  .footer-logo .fi::after { content:''; position:absolute; top:4px; right:4px; width:6px; height:6px; border-top:1.5px solid var(--gold); border-right:1.5px solid var(--gold); }
+  .footer-logo .fn { font-family:'DM Serif Display',serif; font-size:14px; color:#fff; }
+  .footer-logo .fn em { color:var(--gold); font-style:normal; }
+  .conf-bar { background:#060e18; padding:5px 32px; text-align:center; font-size:7px; letter-spacing:1px; color:#334455; }
+</style>
+</head>
+<body>
+
+<!-- Araç Çubuğu -->
+<div class="toolbar no-print">
+  <div class="progress-wrap">
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progressBar"></div>
+    </div>
+    <span class="progress-label" id="progressLabel">0 / 11</span>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-outline" onclick="resetAll()">↺ Sıfırla</button>
+    <button class="btn btn-gold" onclick="window.print()">⬇ PDF Kaydet</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ANTET -->
+  <header class="header">
+    <div class="header-main">
+      <div class="logo-wrap">
+        <div class="logo-icon"><span>A</span></div>
+        <div class="brand-text">
+          <div class="name">Dissolv<em>A</em><sup>™</sup></div>
+          <div class="tagline">PHARMACEUTICAL INTELLIGENCE PLATFORM</div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="doc-type">Toplantı Tutanağı</div>
+        <div class="ref">REF: DVA-MTG-2026-001</div>
+        <div class="date">25 Nisan 2026</div>
+      </div>
+    </div>
+    <div class="gold-sep"></div>
+    <div class="info-band">
+      <div class="info-field"><div class="lbl">Toplantı</div><div class="val">Atilla Hoca Toplantısı</div></div>
+      <div class="info-field"><div class="lbl">Tarih</div><div class="val">25 Nisan 2026</div></div>
+      <div class="info-field"><div class="lbl">Hazırlayan</div><div class="val">M. Sinan KAYNAK</div></div>
+    </div>
+    <div class="badge-strip">
+      <span class="badge">FDA · EMA · USP COMPLIANT</span>
+      <span class="badge">62 KINETIC MODELS</span>
+      <span class="badge">POWERED BY AI</span>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <div class="body">
+    <div class="meta-cards">
+      <div class="meta-card">
+        <div class="mc-head">Katılımcılar</div>
+        <div class="mc-body">Prof. Dr. Atilla Hıncal<br>M. Sinan KAYNAK</div>
+      </div>
+      <div class="meta-card">
+        <div class="mc-head">Toplantı Amacı</div>
+        <div class="mc-body">DissolvA geliştirme öncelikleri, validasyon stratejisi, marka tescili ve uluslararası genişletme</div>
+      </div>
+    </div>
+
+    <div class="section-head"><span>Alınan Kararlar ve Aksiyon Maddeleri</span></div>
+
+    <!-- Kart şablonu: her kart için data-index verildi -->
+
+    <div class="action-card" id="card-1">
+      <div class="action-no">1</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-1">
+          <div class="cb-wrap"><input type="checkbox" id="cb-1" onchange="toggle(1)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">Pro Paket — Endüstriyel Üyelik Yapısı</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">Yazılımın mevcut "Pro" üyelik katmanı, endüstriyel kullanıcıları kapsayacak şekilde yeniden yapılandırılacaktır. Akademik ve kurumsal/endüstriyel kullanıcı profilleri ayrıştırılarak her profil için uygun özellik seti ve fiyatlandırma modeli tanımlanacaktır.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-yuksek">YÜKSEK</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-2">
+      <div class="action-no">2</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-2">
+          <div class="cb-wrap"><input type="checkbox" id="cb-2" onchange="toggle(2)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">EP Kriterleri ve Bootstrap/F1-F2 Testleri — Regülatör Kapsamın Genişletilmesi</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">Mevcut FDA/USP Q değerleri ve uygunluk kriterleri yanına EMA çözünme kılavuzu referans kaynağı olarak eklenerek European Pharmacopoeia (EP) kriterleri yazılıma entegre edilecektir. Bu düzenleme F1/F2 benzerlik testleri ile Bootstrap testi için de uygulanacak; EMA kılavuzu kaynakçaya eklenecektir.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-yuksek">YÜKSEK</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-3">
+      <div class="action-no">3</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-3">
+          <div class="cb-wrap"><input type="checkbox" id="cb-3" onchange="toggle(3)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">Uluslararası Otorite Kapsamı — ICH, Japon Farmakopesi ve Diğerleri</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">DissolvA'nın uluslararası bir platform olduğu göz önünde bulundurularak ICH kılavuzları ve Japon Farmakopesi (JP) başta olmak üzere diğer dünya otoritelerinin çözünme gereksinimleri yazılıma kademeli olarak eklenecektir.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-orta">ORTA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-4">
+      <div class="action-no">4</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-4">
+          <div class="cb-wrap"><input type="checkbox" id="cb-4" onchange="toggle(4)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">Kısaltmalar Sözlüğü (Abbreviations) — Yazılım İçi Terimler</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">Yazılım arayüzü ve raporlarında kullanılan tüm kısaltmalar sistematik biçimde derlenerek yazılım içinde ayrı bir interaktif "Abbreviations / Kısaltmalar" bölümü oluşturulacaktır.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-orta">ORTA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-5">
+      <div class="action-no">5</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-5">
+          <div class="cb-wrap"><input type="checkbox" id="cb-5" onchange="toggle(5)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">Validasyon Literatürünün Güçlendirilmesi — PharmaTeam ve Hasan Bal Görüşmeleri</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">Yazılımın validasyonu için kapsamlı literatür araştırması yapılacak ve sonuçlar kullanıcıya liste halinde sunulacaktır. Bu süreçte <strong>(1)</strong> PharmaTeam ile teknik görüşme gerçekleştirilecek, <strong>(2)</strong> Hasan Bal Hoca ile iletişime geçilecektir.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-yuksek">YÜKSEK</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-6">
+      <div class="action-no">6</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-6">
+          <div class="cb-wrap"><input type="checkbox" id="cb-6" onchange="toggle(6)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">Validasyon Literatür Tabanının 100+ Kaynağa Çıkarılması</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">Mevcut validasyon literatür örnekleri gözden geçirilecek, güncellenerek genişletilecektir. Hedef: aktif literatür sayısının 100'e çıkarılması. Kritik örnekler öncelikli seçilecek ve validasyon sürecinde sistematik biçimde kullanılacaktır.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-orta">ORTA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-7">
+      <div class="action-no">7</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-7">
+          <div class="cb-wrap"><input type="checkbox" id="cb-7" onchange="toggle(7)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">OneDrive Kurulumu — Literatür ve Excel Dosyalarının Paylaşımı</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">Prof. Dr. Atilla Hıncal'ın incelemesi için ortak bir OneDrive çalışma alanı açılacaktır. Validasyon literatürü ve daha önce hazırlanan Excel veri toplama formu bu alana yüklenecek; Hoca'ya erişim bilgileri iletilecektir.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-orta">ORTA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-8">
+      <div class="action-no">8</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-8">
+          <div class="cb-wrap"><input type="checkbox" id="cb-8" onchange="toggle(8)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">DissolvA Marka Tescili — Pınar Bulut ile Görüşme</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">DissolvA markasının tescili için Pınar Bulut ile iletişime geçilecek ve süreç başlatılacaktır. Tescil süreci ve gelişmeler Prof. Dr. Atilla Hıncal'a düzenli olarak raporlanacaktır. (Tahmini tescil maliyeti: 20.000 TL)</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK / Pınar Bulut</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-yuksek">YÜKSEK</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-9">
+      <div class="action-no">9</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-9">
+          <div class="cb-wrap"><input type="checkbox" id="cb-9" onchange="toggle(9)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">Açık Kaynak Kod Stratejisi — Oğuz Türkmen ile Görüşme</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">Yazılımın açık kaynak kod politikası ve hukuki/teknik riskleri değerlendirilecektir. Bu amaçla Oğuz Türkmen ile görüşme gerçekleştirilecek; uygun lisanslama stratejisi belirlenerek kendi uygulama (app) altyapısı kurulacaktır. <strong>İletişim:</strong> 0555 274 65 50</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK / Oğuz Türkmen</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-yuksek">YÜKSEK</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-10">
+      <div class="action-no">10</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-10">
+          <div class="cb-wrap"><input type="checkbox" id="cb-10" onchange="toggle(10)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">Vinod Shah — Uluslararası Değerlendirme Yazısı Hazırlanması</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">DissolvA'yı tanıtmak amacıyla Vinod Shah'a yönelik profesyonel bir bilgilendirme yazısı hazırlanacaktır. Yazı, Prof. Dr. Atilla Hıncal aracılığıyla Vinod Shah'a iletilecek; Shah'ın yazılımı değerlendirmesi talep edilecektir. Bu adım DissolvA'nın uluslararası akademik camiada tanınması açısından kritik önem taşımaktadır.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK / Prof. Dr. A. Hıncal</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-yuksek">YÜKSEK</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card" id="card-11">
+      <div class="action-no">11</div>
+      <div class="action-content">
+        <label class="action-title-row" for="cb-11">
+          <div class="cb-wrap"><input type="checkbox" id="cb-11" onchange="toggle(11)"><div class="cb-box"><span class="tick">✓</span></div></div>
+          <span class="action-title-text">Türkçe Karakter ve Yazı Denetimi — Yazılım Genelinde İnceleme</span>
+          <span class="done-stamp">✓ TAMAMLANDI</span>
+        </label>
+        <div class="action-desc">Yazılımın tüm arayüzü, rapor çıktıları ve kullanıcıya yönelik metinlerdeki Türkçe karakterler (ğ, ş, ı, ö, ü, ç, İ, Ğ, Ş vb.) ve yazım hataları sistematik biçimde gözden geçirilecektir. Tespit edilen hatalar düzeltilerek yazılımın dil kalitesi standart hale getirilecektir.</div>
+        <div class="action-footer">
+          <div class="af-item"><span class="af-label">Sorumlu</span><span class="af-val">M. Sinan KAYNAK</span></div>
+          <div class="af-item"><span class="af-label">Öncelik</span><span class="badge-orta">ORTA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÖZET TABLO -->
+    <div class="section-head"><span>Aksiyon Özeti</span></div>
+    <table class="summary-table" id="summaryTable">
+      <thead>
+        <tr><th>#</th><th>Aksiyon</th><th>Sorumlu</th><th>Öncelik</th></tr>
+      </thead>
+      <tbody>
+        <tr class="high" id="row-1"><td>1</td><td>Pro / Endüstriyel Üyelik</td><td>M.S. KAYNAK</td><td><span class="badge-yuksek">YÜKSEK</span></td></tr>
+        <tr class="high" id="row-2"><td>2</td><td>EP Kriterleri + Bootstrap / F1-F2</td><td>M.S. KAYNAK</td><td><span class="badge-yuksek">YÜKSEK</span></td></tr>
+        <tr class="mid"  id="row-3"><td>3</td><td>ICH / JP Kapsamı</td><td>M.S. KAYNAK</td><td><span class="badge-orta">ORTA</span></td></tr>
+        <tr class="mid"  id="row-4"><td>4</td><td>Abbreviations Sözlüğü</td><td>M.S. KAYNAK</td><td><span class="badge-orta">ORTA</span></td></tr>
+        <tr class="high" id="row-5"><td>5</td><td>Validasyon Literatür + PharmaTeam + H. Bal</td><td>M.S. KAYNAK</td><td><span class="badge-yuksek">YÜKSEK</span></td></tr>
+        <tr class="mid"  id="row-6"><td>6</td><td>Literatür 100+ Kaynağa Çıkar</td><td>M.S. KAYNAK</td><td><span class="badge-orta">ORTA</span></td></tr>
+        <tr class="mid"  id="row-7"><td>7</td><td>OneDrive — Literatür Paylaşımı</td><td>M.S. KAYNAK</td><td><span class="badge-orta">ORTA</span></td></tr>
+        <tr class="high" id="row-8"><td>8</td><td>Marka Tescili — Pınar Bulut</td><td>M.S. KAYNAK / P. Bulut</td><td><span class="badge-yuksek">YÜKSEK</span></td></tr>
+        <tr class="high" id="row-9"><td>9</td><td>Açık Kaynak Strateji — Oğuz Türkmen</td><td>M.S. KAYNAK / O. Türkmen</td><td><span class="badge-yuksek">YÜKSEK</span></td></tr>
+        <tr class="high" id="row-10"><td>10</td><td>Vinod Shah Bilgilendirme Yazısı</td><td>M.S. KAYNAK / Prof. Dr. A. Hıncal</td><td><span class="badge-yuksek">YÜKSEK</span></td></tr>
+        <tr class="mid"  id="row-11"><td>11</td><td>Türkçe Karakter Denetimi</td><td>M.S. KAYNAK</td><td><span class="badge-orta">ORTA</span></td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top:20px;font-size:8.5px;color:#8899aa;line-height:1.7;text-align:justify;">
+      Bu tutanak 25 Nisan 2026 tarihinde gerçekleştirilen toplantı notlarına dayanılarak M. Sinan KAYNAK tarafından hazırlanmıştır. İçerik hakkında düzeltme veya ek talepleriniz için lütfen iletişime geçiniz.
+    </p>
+    <p style="margin-top:10px;font-size:11px;font-weight:600;color:var(--navy);">M. Sinan KAYNAK</p>
+    <p style="font-size:8px;color:var(--dgray);">DissolvA — Kurucu Geliştirici</p>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-sign">
+      <div class="name">M. Sinan KAYNAK</div>
+      <div class="title">DissolvA — Kurucu Geliştirici</div>
+    </div>
+    <div class="footer-logo">
+      <div class="fi"><span>A</span></div>
+      <div>
+        <div class="fn">Dissolv<em>A</em><sup style="font-size:7px;color:#888;font-family:'DM Sans'">™</sup></div>
+        <div style="font-size:5.5px;letter-spacing:1.5px;color:var(--gold);margin-top:2px;">PHARMACEUTICAL INTELLIGENCE PLATFORM</div>
+      </div>
+    </div>
+  </footer>
+  <div class="conf-bar">GİZLİ BELGE &nbsp;·&nbsp; DISSOLVA™ &nbsp;·&nbsp; DVA-MTG-2026-001 &nbsp;·&nbsp; YETKİSİZ DAĞITIM YASAKTIR</div>
+</div>
+
+<script>
+  const TOTAL = 11;
+
+  function toggle(n) {
+    const cb   = document.getElementById('cb-' + n);
+    const card = document.getElementById('card-' + n);
+    const row  = document.getElementById('row-' + n);
+    if (cb.checked) {
+      card.classList.add('done');
+      row.classList.add('done-row');
+    } else {
+      card.classList.remove('done');
+      row.classList.remove('done-row');
+    }
+    updateProgress();
+  }
+
+  function updateProgress() {
+    let done = 0;
+    for (let i = 1; i <= TOTAL; i++) {
+      if (document.getElementById('cb-' + i).checked) done++;
+    }
+    const pct = Math.round((done / TOTAL) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = done + ' / ' + TOTAL + ' (' + pct + '%)';
+  }
+
+  function resetAll() {
+    for (let i = 1; i <= TOTAL; i++) {
+      document.getElementById('cb-' + i).checked = false;
+      document.getElementById('card-' + i).classList.remove('done');
+      document.getElementById('row-' + i).classList.remove('done-row');
+    }
+    updateProgress();
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
